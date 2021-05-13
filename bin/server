@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+$: << File.expand_path(File.join(__dir__, "..", "lib"))
+require "rack/basic_login"
+require "rack/session_counter"
+require "thin"
+
+app = Rack::Builder.new do |builder|
+  builder.use Rack::Reloader
+  builder.use Rack::Session::Pool
+  builder.use Rack::BasicLogin, ENV.fetch("TOKEN")
+  builder.run lambda { |env| [200, {}, ["Welcome!"]]}
+end.to_app
+  
+Rack::Server.start(app: app, port: 8080)
