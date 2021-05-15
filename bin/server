@@ -11,6 +11,7 @@ app = Rack::Builder.new do |builder|
   builder.use Rack::Reloader
   builder.use Rack::Session::Pool
   builder.use Rack::BasicLogin, ENV.fetch("TOKEN")
+  builder.use Rack::SessionCounter, "stats.txt"
   builder.run lambda { |env| [200, {}, ["Welcome!"]]}
 end.to_app
   

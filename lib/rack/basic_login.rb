@@ -36,7 +36,7 @@ module Rack
         when "/login"
           return login(env)
         when "/logout"
-          return logout(req)
+          return logout(env)
         end
       end
 
